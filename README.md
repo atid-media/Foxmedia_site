@@ -43,6 +43,7 @@ If the files end up large, host them on Cloudflare Stream / Bunny instead and ch
 Two Netlify Forms: `apply` (3-step application) and `enquiry` (training page). Both redirect to `/thanks/`.
 After the first deploy, in Netlify → Forms → each form → Notifications: add email notification to the client's inbox. For the Google Sheet, use Netlify's Zapier integration or a Zap triggered on "New Form Submission".
 Spam: honeypot field is set (`bot-field`). Turn on Netlify's Akismet filtering too.
+Note: Netlify only detects forms if Forms is enabled on the site *before* the deploy runs (Project → Forms → Enable). If you enable it later, trigger a redeploy.
 
 ## Deploying
 
