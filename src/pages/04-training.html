@@ -1,0 +1,87 @@
+<!-- path: /training/ -->
+<!-- title: Training & services | Fox Media Agency -->
+<!-- desc: Courses, 1:1 coaching, workshops, business content creation and social media management from the Fox Media team. Enquire for details. -->
+<!-- nav: training -->
+<!-- end-meta -->
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow">Training &amp; services</p>
+    <h1>Want more than <span class="accent">the network?</span></h1>
+    <p class="lead">Joining Fox Media as a creator is free. Alongside that, we run paid training and services for creators who want to go deeper, and for businesses who want content that actually works on social.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="services">
+      <article class="service r">
+        <span class="who">For creators</span>
+        <h3>Training courses</h3>
+        <p>Structured courses on LIVE performance, camera confidence, content and growth, built from what we do every day on our own accounts.</p>
+        <span class="price">Details and pricing on enquiry</span>
+      </article>
+      <article class="service r">
+        <span class="who">For creators</span>
+        <h3>1:1 coaching</h3>
+        <p>Focused time with MJ or Wayne on your account, your content and your goals. Honest feedback and a plan you can actually follow.</p>
+        <span class="price">Details and pricing on enquiry</span>
+      </article>
+      <article class="service r">
+        <span class="who">For creators and groups</span>
+        <h3>Workshops</h3>
+        <p>Hands-on sessions, online or in person in Cornwall, for small groups who want to learn together.</p>
+        <span class="price">Details and pricing on enquiry</span>
+      </article>
+      <article class="service r">
+        <span class="who">For businesses</span>
+        <h3>Business content creation</h3>
+        <p>Short-form video and LIVE content for local businesses, made by people who know what gets watched on TikTok, Instagram and Facebook.</p>
+        <span class="price">Details and pricing on enquiry</span>
+      </article>
+      <article class="service r">
+        <span class="who">For businesses</span>
+        <h3>Social media management</h3>
+        <p>Monthly management of your social channels: planning, posting, engagement and reporting, so you can get on with running the business.</p>
+        <span class="price">Monthly subscription · details on enquiry</span>
+      </article>
+      <article class="service r" style="justify-content:center;align-items:flex-start;background:var(--accent-soft);border-color:var(--accent)">
+        <h3>Not sure which?</h3>
+        <p>Tell us what you're trying to do and we'll tell you honestly whether we can help, and what it would cost.</p>
+        <a class="btn btn-primary" href="#enquire" style="margin-top:6px">Send an enquiry</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="dark2" id="enquire">
+  <div class="wrap split">
+    <div class="section-head r" style="margin:0">
+      <p class="eyebrow">Enquire</p>
+      <h2>Tell us what <span style="color:var(--accent)">you need</span></h2>
+      <p class="lead">We'll come back to you within a couple of days with honest answers and a price.</p>
+      <p class="fineprint">Looking to join the network as a creator? That's free, and it's a different form: <a href="/apply/" style="color:var(--accent)">apply here</a>.</p>
+    </div>
+    <form class="form r" id="enquiryForm" name="enquiry" method="POST" action="/thanks/" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="enquiry">
+      <p class="hp"><label>Don't fill this in: <input name="bot-field"></label></p>
+      <div class="fields">
+        <div class="field"><label for="e-name">Your name</label><input id="e-name" name="name" required autocomplete="name"></div>
+        <div class="field"><label for="e-email">Email</label><input id="e-email" name="email" type="email" required autocomplete="email"></div>
+        <div class="field"><label for="e-service">What are you interested in?</label>
+          <select id="e-service" name="service" required>
+            <option value="">Choose one</option>
+            <option>Training courses</option>
+            <option>1:1 coaching</option>
+            <option>Workshops</option>
+            <option>Business content creation</option>
+            <option>Social media management</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+        <div class="field"><label for="e-msg">Tell us a bit about what you're after</label><textarea id="e-msg" name="message" required></textarea></div>
+        <label class="check"><input type="checkbox" name="consent" required>I'm happy for Fox Media to contact me about this enquiry. See our <a href="/privacy/" style="color:var(--accent)">privacy policy</a>.</label>
+      </div>
+      <div class="formnav"><span></span><button type="submit" class="btn btn-primary">Send enquiry</button></div>
+    </form>
+  </div>
+</section>

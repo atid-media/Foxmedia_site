@@ -1,0 +1,81 @@
+<!-- path: /apply/ -->
+<!-- title: Apply to join | Fox Media Agency -->
+<!-- desc: Apply to join the Fox Media TikTok LIVE creator network. Free to join, 18+, UK only. Takes about two minutes. -->
+<!-- nav: apply -->
+<!-- end-meta -->
+<section class="apply" style="border-top:0">
+  <div class="wrap" style="padding-block:clamp(48px,7vw,88px)">
+    <div class="section-head r" style="margin:0">
+      <p class="eyebrow">Apply to join</p>
+      <h2>Ready to go <span style="color:var(--accent)">LIVE</span> with us?</h2>
+      <p class="lead">Takes about two minutes. Tell us where you're at and what you want, and we'll take it from there.</p>
+      <p class="fineprint">You must be 18+, UK-based, and willing to go LIVE regularly. Joining is free.</p>
+      <ul class="refuse" style="margin-top:12px;font-size:14px">
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>We read every application personally</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>If you're a fit, we book an onboarding call</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>No pressure, no sales call</li>
+      </ul>
+    </div>
+
+    <form class="form r" id="applyForm" name="apply" method="POST" action="/thanks/" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+      <input type="hidden" name="form-name" value="apply">
+      <p class="hp"><label>Don't fill this in: <input name="bot-field"></label></p>
+      <div class="progress" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
+
+      <div data-step="1">
+        <div class="fields">
+          <p class="steplabel">Step 1 of 3 · About you</p>
+          <div class="field"><label for="f-handle">TikTok handle</label><input id="f-handle" name="tiktok_handle" placeholder="@yourhandle" autocomplete="off" required></div>
+          <div class="field"><label for="f-followers">Follower count</label>
+            <select id="f-followers" name="followers" required>
+              <option value="">Choose one</option>
+              <option>Under 1,000</option><option>1,000 to 5,000</option><option>5,000 to 20,000</option><option>20,000 to 100,000</option><option>100,000+</option>
+            </select>
+          </div>
+          <div class="field"><label>Your niche</label>
+            <input type="hidden" name="niche" required>
+            <div class="chips" data-group="niche"><button type="button" class="chip" aria-pressed="false">Chat &amp; lifestyle</button><button type="button" class="chip" aria-pressed="false">DJ / music</button><button type="button" class="chip" aria-pressed="false">Arts &amp; crafts</button><button type="button" class="chip" aria-pressed="false">Personality</button><button type="button" class="chip" aria-pressed="false">Other</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div data-step="2" hidden>
+        <div class="fields">
+          <p class="steplabel">Step 2 of 3 · Your goals</p>
+          <div class="field"><label>How often do you go LIVE?</label>
+            <input type="hidden" name="live_frequency" required>
+            <div class="chips" data-group="freq"><button type="button" class="chip" aria-pressed="false">Not yet</button><button type="button" class="chip" aria-pressed="false">Now and then</button><button type="button" class="chip" aria-pressed="false">Weekly</button><button type="button" class="chip" aria-pressed="false">Most days</button></div>
+          </div>
+          <div class="field"><label>Hours a week you can give it</label>
+            <input type="hidden" name="hours_per_week" required>
+            <div class="chips" data-group="hours"><button type="button" class="chip" aria-pressed="false">Under 5</button><button type="button" class="chip" aria-pressed="false">5 to 10</button><button type="button" class="chip" aria-pressed="false">10 to 20</button><button type="button" class="chip" aria-pressed="false">20+</button></div>
+          </div>
+          <div class="field"><label>Biggest struggle right now</label>
+            <input type="hidden" name="biggest_struggle" required>
+            <div class="chips" data-group="struggle"><button type="button" class="chip" aria-pressed="false">Camera confidence</button><button type="button" class="chip" aria-pressed="false">Nobody watching</button><button type="button" class="chip" aria-pressed="false">Content ideas</button><button type="button" class="chip" aria-pressed="false">Gifts &amp; diamonds</button><button type="button" class="chip" aria-pressed="false">Staying consistent</button></div>
+          </div>
+          <div class="field"><label for="f-goal">What do you want out of this?</label><input id="f-goal" name="goal" placeholder="e.g. make LIVE my main income" required></div>
+        </div>
+      </div>
+
+      <div data-step="3" hidden>
+        <div class="fields">
+          <p class="steplabel">Step 3 of 3 · Contact</p>
+          <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" autocomplete="name" required></div>
+          <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+          <div class="field"><label for="f-phone">Phone (optional)</label><input id="f-phone" name="phone" type="tel" autocomplete="tel"></div>
+          <label class="check"><input type="checkbox" id="f-age" name="eligibility" value="Confirmed 18+, UK, main account" required>I confirm I'm 18 or over, UK-based, and this is my main TikTok account.</label>
+          <label class="check"><input type="checkbox" id="f-privacy" name="consent" value="Agreed" required>I'm happy for Fox Media to contact me about my application. See our <a href="/privacy/" style="color:var(--accent)">privacy policy</a>.</label>
+        </div>
+      </div>
+
+      <div class="formnav" id="formNav">
+        <button type="button" class="btn btn-ghost" id="backBtn" hidden>Back</button>
+        <span></span>
+        <button type="button" class="btn btn-primary" id="nextBtn">Continue
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
