@@ -127,6 +127,29 @@
     f.parentElement.addEventListener('click', function () { this.classList.toggle('open'); });
   });
 
+  /* ---------- reviews carousel: controls appear only when the cards overflow ---------- */
+  $$('.rv-track').forEach(function (track) {
+    var sec = track.closest('section'), nav = $('.rv-nav', sec), dots = $('.rv-dots', sec);
+    var cards = [].slice.call(track.children);
+    function mark() {
+      if (!dots || dots.hidden) return;
+      var mid = track.scrollLeft + track.clientWidth / 2, best = 0, bd = 1e9;
+      cards.forEach(function (c, i) { var d = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid); if (d < bd) { bd = d; best = i; } });
+      [].slice.call(dots.children).forEach(function (d, i) { d.classList.toggle('on', i === best); });
+    }
+    function sync() {
+      var over = track.scrollWidth > track.clientWidth + 4;
+      if (nav) nav.hidden = !over;
+      if (dots) { dots.hidden = !over; if (over && !dots.children.length) cards.forEach(function () { dots.appendChild(document.createElement('i')); }); }
+      mark();
+    }
+    track.addEventListener('scroll', function () { requestAnimationFrame(mark); }, { passive: true });
+    $$('.rv-arrow', sec).forEach(function (b) { b.addEventListener('click', function () {
+      track.scrollBy({ left: parseInt(b.getAttribute('data-dir'), 10) * (cards[0].offsetWidth + 24), behavior: reduce ? 'auto' : 'smooth' });
+    }); });
+    window.addEventListener('resize', sync); sync();
+  });
+
   /* ---------- chip groups write to a hidden input ---------- */
   $$('.chips').forEach(function (g) {
     var input = $('input[type="hidden"]', g.parentElement);
