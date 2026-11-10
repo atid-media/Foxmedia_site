@@ -63,7 +63,7 @@
     </div>
     <form class="form r" id="enquiryForm" name="enquiry" method="POST" action="/thanks/" data-netlify="true" netlify-honeypot="bot-field">
       <input type="hidden" name="form-name" value="enquiry">
-      <p class="hp"><label>Don't fill this in: <input name="bot-field"></label></p>
+      <p class="hp" aria-hidden="true"><label>Don't fill this in: <input name="bot-field" autocomplete="off" tabindex="-1"></label></p>
       <div class="fields">
         <div class="field"><label for="e-name">Your name</label><input id="e-name" name="name" required autocomplete="name"></div>
         <div class="field"><label for="e-email">Email</label><input id="e-email" name="email" type="email" required autocomplete="email"></div>

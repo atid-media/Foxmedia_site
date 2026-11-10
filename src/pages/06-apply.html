@@ -19,7 +19,7 @@
 
     <form class="form r" id="applyForm" name="apply" method="POST" action="/thanks/" data-netlify="true" netlify-honeypot="bot-field" novalidate>
       <input type="hidden" name="form-name" value="apply">
-      <p class="hp"><label>Don't fill this in: <input name="bot-field"></label></p>
+      <p class="hp" aria-hidden="true"><label>Don't fill this in: <input name="bot-field" autocomplete="off" tabindex="-1"></label></p>
       <div class="progress" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
 
       <div data-step="1">
