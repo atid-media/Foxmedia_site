@@ -16,6 +16,15 @@ def read(p):
         return f.read()
 
 LAYOUT = read("layout.html")
+
+# Cache-bust: /assets/* is served with a one-year immutable cache (static/_headers), so stamp the CSS and JS
+# links with a short content hash. A changed file gets a new URL and returning visitors pick it up.
+import hashlib
+def _ver(rel):
+    with open(os.path.join(ROOT, rel), "rb") as f:
+        return hashlib.md5(f.read()).hexdigest()[:8]
+for _rel in ("assets/css/site.css", "assets/js/site.js"):
+    LAYOUT = LAYOUT.replace('"/%s"' % _rel, '"/%s?v=%s"' % (_rel, _ver(_rel)))
 NAV = read("nav.html")
 FOOTER = read("footer.html")
 

@@ -127,28 +127,188 @@
     f.parentElement.addEventListener('click', function () { this.classList.toggle('open'); });
   });
 
-  /* ---------- reviews carousel: controls appear only when the cards overflow ---------- */
-  $$('.rv-track').forEach(function (track) {
-    var sec = track.closest('section'), nav = $('.rv-nav', sec), dots = $('.rv-dots', sec);
-    var cards = [].slice.call(track.children);
-    function mark() {
-      if (!dots || dots.hidden) return;
-      var mid = track.scrollLeft + track.clientWidth / 2, best = 0, bd = 1e9;
-      cards.forEach(function (c, i) { var d = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid); if (d < bd) { bd = d; best = i; } });
-      [].slice.call(dots.children).forEach(function (d, i) { d.classList.toggle('on', i === best); });
+  /* ---------- reviews: full-width rail. Drifts on its own, eases to a stop under the pointer, grows the card
+     in place while its neighbours make room, counts down 'LIVE in 5', then fades the creator's clip in under
+     the overlays. Touch: tap a card (1.5s countdown). Reduced motion: a plain scrollable row. ---------- */
+  var touchOnly = window.matchMedia('(hover: none)').matches;
+  var GROW_MS = 1150; /* matches the width transition in site.css */
+
+  function initRail(section) {
+    var rail = section.querySelector('.rv-rail');
+    var belt = rail && rail.querySelector('.rv-belt');
+    if (!belt || rail.dataset.ready || !rail.offsetParent) return;
+    rail.dataset.ready = '1';
+
+    var DELAY = touchOnly ? 1500 : 5000;
+    section.style.setProperty('--delay', DELAY + 'ms');
+    var BASE = 26; /* px per second */
+
+    var originals = [].slice.call(belt.children);
+    originals.forEach(function (c) { c.setAttribute('tabindex', '0'); });
+
+    var toggle = section.querySelector('.rv-toggle');
+
+    if (reduce) {
+      rail.classList.add('static');
+      if (toggle) toggle.hidden = true;
+      originals.forEach(function (c) { wire(c); });
+      return;
     }
-    function sync() {
-      var over = track.scrollWidth > track.clientWidth + 4;
-      if (nav) nav.hidden = !over;
-      if (dots) { dots.hidden = !over; if (over && !dots.children.length) cards.forEach(function () { dots.appendChild(document.createElement('i')); }); }
-      mark();
+
+    /* clones so the belt never runs out; they are decorative copies */
+    var sets = [originals];
+    function addSet() {
+      var set = originals.map(function (c) {
+        var k = c.cloneNode(true);
+        k.setAttribute('aria-hidden', 'true'); k.removeAttribute('tabindex');
+        [].forEach.call(k.querySelectorAll('a'), function (a) { a.tabIndex = -1; });
+        belt.appendChild(k); wire(k); return k;
+      });
+      sets.push(set);
     }
-    track.addEventListener('scroll', function () { requestAnimationFrame(mark); }, { passive: true });
-    $$('.rv-arrow', sec).forEach(function (b) { b.addEventListener('click', function () {
-      track.scrollBy({ left: parseInt(b.getAttribute('data-dir'), 10) * (cards[0].offsetWidth + 24), behavior: reduce ? 'auto' : 'smooth' });
-    }); });
-    window.addEventListener('resize', sync); sync();
-  });
+    function period() { return sets[1][0].offsetLeft - sets[0][0].offsetLeft; }
+    function fill() {
+      if (sets.length < 2) addSet();
+      if (period() <= 0) return;
+      var need = Math.ceil((rail.clientWidth + 2 * period()) / period()) + 1;
+      while (sets.length < need) addSet();
+    }
+    originals.forEach(wire);
+    fill();
+
+    var offset = -period() * 0.35, vel = BASE, last = 0, running = false, visible = false, paused = false;
+    var active = null, anchor = null, anchorX = 0, anchorUntil = 0;
+    var dragging = false;
+
+    function wire(card) {
+      var video = card.querySelector('.rv-video');
+      card._t0 = 0;
+      card._on = function () {
+        if (active && active !== card) active._off();
+        active = card; belt.classList.add('has-on');
+        card.classList.add('is-on'); card._t0 = performance.now(); card._count = -1; card._fired = false;
+        setAnchor(card);
+        if (video && !video.src && card.dataset.video) { video.preload = 'auto'; video.src = card.dataset.video; video.load(); }
+      };
+      card._off = function () {
+        card.classList.remove('is-on', 'is-live'); card._t0 = 0;
+        var s = card.querySelector('.rv-state'); if (s) s.textContent = 'Fox Media creator';
+        if (active === card) { active = null; belt.classList.remove('has-on'); }
+        anchorUntil = performance.now() + GROW_MS;
+        if (video) setTimeout(function () { if (!card.classList.contains('is-on')) video.pause(); }, 1400);
+      };
+      card._live = function () {
+        if (!video || !video.src) return;
+        var go = function () {
+          if (!card.classList.contains('is-on')) return;
+          var p = video.play();
+          var show = function () { if (card.classList.contains('is-on')) card.classList.add('is-live'); };
+          if (p && p.then) p.then(show, function () {}); else show();
+        };
+        if (video.readyState >= 3) go(); else video.addEventListener('canplay', go, { once: true });
+      };
+      if (touchOnly) {
+        card.addEventListener('click', function (e) {
+          if (e.target.closest('a') || rail.dataset.dragged) return;
+          card.classList.contains('is-on') ? card._off() : card._on();
+        });
+      } else {
+        card.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse' && !dragging) card._on(); });
+        card.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse' && active === card) card._off(); });
+      }
+      card.addEventListener('focus', function () {
+        if (!card.matches(':focus-visible')) return;
+        if (!reduce) { rail.scrollLeft = 0; var r = card.getBoundingClientRect(), rr = rail.getBoundingClientRect(); offset += (rr.left + rr.width / 2) - (r.left + r.width / 2); }
+        card._on();
+      });
+      card.addEventListener('blur', function () { if (active === card) card._off(); });
+    }
+
+    function setAnchor(card) {
+      if (reduce) return;
+      anchor = card;
+      var r = card.getBoundingClientRect(); anchorX = r.left + r.width / 2;
+    }
+
+    function tick(t) {
+      if (!running) return;
+      var dt = last ? Math.min(0.05, (t - last) / 1000) : 0; last = t;
+
+      /* target speed: zero while a card is on or the viewer has paused it */
+      var target = (active || paused) ? 0 : BASE;
+      if (!dragging) vel += (target - vel) * Math.min(1, dt * (active ? 5 : 2.2));
+      if (!dragging) offset -= vel * dt;
+
+      belt.style.transform = 'translate3d(' + offset + 'px,0,0)';
+
+      /* keep the growing (or shrinking) card centred where it was, so it grows out both sides */
+      if (anchor && (anchor.classList.contains('is-on') || t < anchorUntil)) {
+        anchorX -= vel * dt;
+        var r = anchor.getBoundingClientRect();
+        offset += anchorX - (r.left + r.width / 2);
+        belt.style.transform = 'translate3d(' + offset + 'px,0,0)';
+      } else {
+        anchor = null;
+        var p = period();
+        if (p <= 0) { stop(); return; }
+        while (offset <= -p) offset += p;
+        while (offset > 0) offset -= p;
+      }
+
+      /* the countdown */
+      if (active && active._t0) {
+        var el = t - active._t0;
+        var n = Math.max(0, Math.ceil((DELAY - el) / 1000));
+        if (n !== active._count) { active._count = n; var s = active.querySelector('.rv-state'); if (s) s.textContent = n > 0 ? 'LIVE in ' + n : 'LIVE'; }
+        if (el >= DELAY && !active._fired) { active._fired = true; active._live(); }
+      }
+      requestAnimationFrame(tick);
+    }
+    function start() { if (running || !visible || document.hidden) return; running = true; last = 0; requestAnimationFrame(tick); }
+    function stop() { running = false; }
+
+    new IntersectionObserver(function (es) { visible = es[0].isIntersecting; visible ? start() : stop(); }).observe(rail);
+    document.addEventListener('visibilitychange', function () { document.hidden ? stop() : start(); });
+
+    window.addEventListener('resize', function () { fill(); });
+
+    if (toggle) toggle.addEventListener('click', function () {
+      paused = !paused; toggle.setAttribute('aria-pressed', paused ? 'true' : 'false');
+      toggle.setAttribute('aria-label', paused ? 'Play the reviews' : 'Pause the reviews');
+    });
+
+    /* drag / swipe, with a little throw */
+    var px = 0, pt = 0, down = false, moved = 0;
+    rail.addEventListener('pointerdown', function (e) {
+      if (e.button !== 0 || e.target.closest('a')) return;
+      down = true; moved = 0; px = e.clientX; pt = performance.now(); delete rail.dataset.dragged;
+    });
+    rail.addEventListener('pointermove', function (e) {
+      if (!down) return;
+      var dx = e.clientX - px, now = performance.now();
+      moved += Math.abs(dx);
+      if (!dragging && moved > 8) {
+        dragging = true; rail.classList.add('dragging'); rail.dataset.dragged = '1';
+        try { rail.setPointerCapture(e.pointerId); } catch (_) {}
+        if (active) active._off(); anchor = null;
+      }
+      if (dragging) { offset += dx; vel = -dx / Math.max(0.008, (now - pt) / 1000); }
+      px = e.clientX; pt = now;
+    });
+    function up() {
+      if (!down) return; down = false;
+      if (dragging) { dragging = false; rail.classList.remove('dragging'); setTimeout(function () { delete rail.dataset.dragged; }, 50); }
+    }
+    rail.addEventListener('pointerup', up); rail.addEventListener('pointercancel', up);
+
+    /* sideways trackpad swipes move it too */
+    rail.addEventListener('wheel', function (e) {
+      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+      e.preventDefault(); if (active) active._off(); anchor = null; offset -= e.deltaX;
+    }, { passive: false });
+  }
+
+  $$('.reviews-sec').forEach(initRail);
 
   /* ---------- chip groups write to a hidden input ---------- */
   $$('.chips').forEach(function (g) {

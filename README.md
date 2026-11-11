@@ -38,6 +38,14 @@ If the files end up large, host them on Cloudflare Stream / Bunny instead and ch
 
 `src/pages/03-creators.html` has six placeholder cards with comments explaining each field. Fill in handle, niche, follower count and profile link; optionally add a photo (`assets/img/creators/`) or clip (`assets/video/creators/`). Then uncomment the Creators link in `src/nav.html`.
 
+## Reviews rail
+
+The "What our creators say" section (home and creators pages) is one full-width rail. Cards drift on their own, grow on hover, and after 5 seconds count down to LIVE and fade the creator's clip in.
+To add a review: copy one `<figure class="rv-card">` block in both `src/pages/00-home.html` and `src/pages/03-creators.html` (newest first) and drop the clip in `assets/video/reviews/`.
+Clip spec: `ffmpeg -i in.mp4 -t 12 -an -vf "scale=540:960:force_original_aspect_ratio=increase,crop=540:960,fps=24" -c:v libx264 -profile:v main -pix_fmt yuv420p -crf 31 -preset slow -movflags +faststart handle.mp4` (aim for under ~1.5 MB).
+The tilt is daisyUI's hover-3d CSS copied into `site.css` (MIT, credited in the file); no daisyUI install.
+CSS and JS links get a content hash at build time, so the one-year asset cache never serves stale styles.
+
 ## Forms
 
 Two Netlify Forms: `apply` (3-step application) and `enquiry` (training page). Both redirect to `/thanks/`.

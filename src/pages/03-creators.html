@@ -69,51 +69,80 @@
         <p class="eyebrow">Don't take our word for it</p>
         <h2>What our <span style="color:var(--accent)">creators</span> say</h2>
       </div>
-      <div class="rv-nav" hidden><button class="rv-arrow" data-dir="-1" aria-label="Previous review">←</button><button class="rv-arrow" data-dir="1" aria-label="Next review">→</button></div>
+      <div class="rv-ctrl">
+        <span class="rv-hint"><i></i><span class="m">Hover a creator to watch them</span><span class="t">Tap a creator to watch them</span></span>
+        <button class="rv-toggle" type="button" aria-pressed="false" aria-label="Pause the reviews"><svg class="pause" viewBox="0 0 14 14" aria-hidden="true"><rect x="2" y="1" width="3.5" height="12" rx="1"/><rect x="8.5" y="1" width="3.5" height="12" rx="1"/></svg><svg class="play" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1.5v11l9.5-5.5z"/></svg></button>
+      </div>
     </div>
-    <div class="rv-track">
-      <figure class="rv-card r">
-        <div class="rv-phone"><div class="rv-screen">
-          <div class="rv-top"><span class="pill rec">★ Recommends</span><span class="pill">Fox Media creator</span></div>
-          <div class="rv-who"><i>C</i><b>@charliemorris3007</b></div>
-          <blockquote class="rv-quote">Amazing group of people, who know exactly how to boost your confidence, give great advice, judgement free and extremely supportive 😊. I'm very glad that I am now part of the team 🫶</blockquote>
-          <div class="rv-hearts" aria-hidden="true"><span></span><span></span><span></span></div>
-          <div class="rv-stars" aria-label="Five stars">★★★★★</div>
-        </div></div>
+  </div>
+  <!-- full-width rail: newest review first. The script clones the set to keep it moving; edit only these cards. -->
+  <div class="rv-rail r" aria-label="Reviews from Fox Media creators">
+    <div class="rv-belt">
+      <!-- review card: data-video is the creator's clip (540x960 H.264, no audio, under ~1.5 MB) -->
+      <figure class="rv-card" data-video="/assets/video/reviews/charliemorris3007.mp4">
+        <div class="rv-tilt hover-3d">
+          <div class="rv-phone"><div class="rv-screen">
+            <video class="rv-video" muted playsinline loop preload="none" aria-hidden="true"></video>
+            <div class="rv-scrim"></div>
+            <div class="rv-top"><span class="pill rec">★ Recommends</span><span class="pill rv-state">Fox Media creator</span></div>
+            <div class="rv-who"><i>C</i><b>@charliemorris3007</b></div>
+            <blockquote class="rv-quote">Amazing group of people, who know exactly how to boost your confidence, give great advice, judgement free and extremely supportive 😊. I'm very glad that I am now part of the team 🫶</blockquote>
+            <div class="rv-hearts" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+            <div class="rv-stars" aria-label="Five stars">★★★★★</div>
+          </div></div>
+          <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        </div>
         <figcaption><a href="https://www.tiktok.com/@charliemorris3007" target="_blank" rel="noopener">@charliemorris3007</a> · Fox Media creator · Facebook recommendation, November 2026</figcaption>
       </figure>
-      <figure class="rv-card r">
-        <div class="rv-phone"><div class="rv-screen alt">
-          <div class="rv-top"><span class="pill rec">★ Recommends</span><span class="pill">Fox Media creator</span></div>
-          <div class="rv-who"><i>M</i><b>@megscrochets</b></div>
-          <blockquote class="rv-quote">It's been great to be part of this agency. They are very friendly and always willing to help</blockquote>
-          <div class="rv-hearts" aria-hidden="true"><span></span><span></span><span></span></div>
-          <div class="rv-stars" aria-label="Five stars">★★★★★</div>
-        </div></div>
+      <!-- review card: data-video is the creator's clip (540x960 H.264, no audio, under ~1.5 MB) -->
+      <figure class="rv-card" data-video="/assets/video/reviews/megscrochets.mp4">
+        <div class="rv-tilt hover-3d">
+          <div class="rv-phone"><div class="rv-screen alt">
+            <video class="rv-video" muted playsinline loop preload="none" aria-hidden="true"></video>
+            <div class="rv-scrim"></div>
+            <div class="rv-top"><span class="pill rec">★ Recommends</span><span class="pill rv-state">Fox Media creator</span></div>
+            <div class="rv-who"><i>M</i><b>@megscrochets</b></div>
+            <blockquote class="rv-quote">It's been great to be part of this agency. They are very friendly and always willing to help</blockquote>
+            <div class="rv-hearts" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+            <div class="rv-stars" aria-label="Five stars">★★★★★</div>
+          </div></div>
+          <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        </div>
         <figcaption><a href="https://www.tiktok.com/@megscrochets" target="_blank" rel="noopener">@megscrochets</a> · Fox Media creator · Facebook recommendation, November 2026</figcaption>
       </figure>
-      <figure class="rv-card r">
-        <div class="rv-phone"><div class="rv-screen">
-          <div class="rv-top"><span class="pill rec">★ Recommends</span><span class="pill">Fox Media creator</span></div>
-          <div class="rv-who"><i>S</i><b>@copperhousepostoffice</b></div>
-          <blockquote class="rv-quote">I've had such a positive experience being part of Fox Media. The support, encouragement and sense of community have been amazing, and I've met some genuinely lovely people along the way. It's nice being part of a team that wants to see its creators grow and do well.</blockquote>
-          <div class="rv-hearts" aria-hidden="true"><span></span><span></span><span></span></div>
-          <div class="rv-stars" aria-label="Five stars">★★★★★</div>
-        </div></div>
+      <!-- review card: data-video is the creator's clip (540x960 H.264, no audio, under ~1.5 MB) -->
+      <figure class="rv-card" data-video="/assets/video/reviews/copperhousepostoffice.mp4">
+        <div class="rv-tilt hover-3d">
+          <div class="rv-phone"><div class="rv-screen">
+            <video class="rv-video" muted playsinline loop preload="none" aria-hidden="true"></video>
+            <div class="rv-scrim"></div>
+            <div class="rv-top"><span class="pill rec">★ Recommends</span><span class="pill rv-state">Fox Media creator</span></div>
+            <div class="rv-who"><i>S</i><b>@copperhousepostoffice</b></div>
+            <blockquote class="rv-quote">I've had such a positive experience being part of Fox Media. The support, encouragement and sense of community have been amazing, and I've met some genuinely lovely people along the way. It's nice being part of a team that wants to see its creators grow and do well.</blockquote>
+            <div class="rv-hearts" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+            <div class="rv-stars" aria-label="Five stars">★★★★★</div>
+          </div></div>
+          <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        </div>
         <figcaption><a href="https://www.tiktok.com/@copperhousepostoffice" target="_blank" rel="noopener">@copperhousepostoffice</a> · Fox Media creator · Facebook recommendation, October 2026</figcaption>
       </figure>
-      <figure class="rv-card r">
-        <div class="rv-phone"><div class="rv-screen alt">
-          <div class="rv-top"><span class="pill rec">★ Recommends</span><span class="pill">Fox Media creator</span></div>
-          <div class="rv-who"><i>D</i><b>@dave_7.2</b></div>
-          <blockquote class="rv-quote">Super friendly. Not pushy at all. They want creators to thrive and offer training and advice on all your creating needs. Absolutely no pressure to do anything that you don't want to do. I'm so happy since I've joined Fox Media and I would recommend them to anyone.</blockquote>
-          <div class="rv-hearts" aria-hidden="true"><span></span><span></span><span></span></div>
-          <div class="rv-stars" aria-label="Five stars">★★★★★</div>
-        </div></div>
+      <!-- review card: data-video is the creator's clip (540x960 H.264, no audio, under ~1.5 MB) -->
+      <figure class="rv-card" data-video="/assets/video/reviews/dave_7.2.mp4">
+        <div class="rv-tilt hover-3d">
+          <div class="rv-phone"><div class="rv-screen alt">
+            <video class="rv-video" muted playsinline loop preload="none" aria-hidden="true"></video>
+            <div class="rv-scrim"></div>
+            <div class="rv-top"><span class="pill rec">★ Recommends</span><span class="pill rv-state">Fox Media creator</span></div>
+            <div class="rv-who"><i>D</i><b>@dave_7.2</b></div>
+            <blockquote class="rv-quote">Super friendly. Not pushy at all. They want creators to thrive and offer training and advice on all your creating needs. Absolutely no pressure to do anything that you don't want to do. I'm so happy since I've joined Fox Media and I would recommend them to anyone.</blockquote>
+            <div class="rv-hearts" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+            <div class="rv-stars" aria-label="Five stars">★★★★★</div>
+          </div></div>
+          <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        </div>
         <figcaption><a href="https://www.tiktok.com/@dave_7.2" target="_blank" rel="noopener">@dave_7.2</a> · Fox Media creator · Facebook recommendation, September 2026</figcaption>
       </figure>
     </div>
-    <div class="rv-dots" hidden></div>
   </div>
 </section>
 
